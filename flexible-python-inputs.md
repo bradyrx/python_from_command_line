@@ -1,19 +1,3 @@
-+++
-date = "2018-06-14T12:00:00"
-draft = false
-tags = ["python", "data analysis", "climate", "tutorial"]
-title = "Flexible python scripts from the command line (Tutorial)"
-math = true
-summary = """
-Create python scripts for data analysis with flexible inputs from the command line.
-"""
-
-[header]
-image = ""
-caption = ""
-
-+++
-
 # Preface
 ---
 For this tutorial, I assume that you can handle installing python and some packages on your machine, can open a text editor and write a python script from scratch (or edit the one I provide), and can use the command line to move to a folder and execute a script. 
