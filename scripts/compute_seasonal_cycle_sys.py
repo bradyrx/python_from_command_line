@@ -22,14 +22,26 @@ import cartopy.feature as cfeature
 from cartopy.util import add_cyclic_point
 from shapely.geometry.polygon import LinearRing
 import sys
-plt.style.use('fivethirtyeight')
+plt.style.use('ggplot')
 
 def main():
 	x0 = int(sys.argv[1])
 	x1 = int(sys.argv[2])
 	y0 = int(sys.argv[3])
 	y1 = int(sys.argv[4])
-	ds = xr.open_dataset('data/CESM_LE.TS.002.1990-01.2000-12.nc')
+	# + + + Main Body + + +
+	# Remind to gunzip if needed
+	if not os.path.exists('../data/CESM_LE.TS.002.1990-01.2000-12.nc'):
+		raise OSError(
+			'''
+			It looks like you haven't gunzipped the data provided. Please do so
+			before running this analysis by doing the following:
+
+			cd ../data
+			gunzip CESM_LE.TS.002.1990-01.2000-12.nc.gz
+			'''
+			)
+	ds = xr.open_dataset('../data/CESM_LE.TS.002.1990-01.2000-12.nc')
 	# Extract region of interest
 	ds = ds.sel(lat=slice(y0, y1), lon=slice(x0, x1))
 	# Take mean over region
@@ -48,7 +60,11 @@ def main():
 		str(y0) + ' - ' + str(y1) + '; Lon: ' + str(x0) + ' - ' + str(x1) + ']')
 	ax.set_title(title)
 	ax.set_ylabel('Surface Temperature [$^{o}\mathrm{C}$]')
-	plt.savefig('mean_seasonal_cycle.png', bbox_inches='tight', pad_inches=1,
+	directory = '../output_figs/'
+	fileName = ('mean_seasonal_cycle_lat' + str(LAT_BNDS[0]) + '_to_' +
+		str(LAT_BNDS[1]) + '_lon' + str(LON_BNDS[0]) + '_to_' + 
+		str(LON_BNDS[1]) + '.png')
+	plt.savefig(directory + fileName, bbox_inches='tight', pad_inches=1,
                     transparent=False, dpi=300)
 
 if __name__ == '__main__':
