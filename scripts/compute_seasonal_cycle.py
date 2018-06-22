@@ -58,7 +58,9 @@ def main():
 	ax.set_title(title)
 	ax.set_ylabel('Surface Temperature [$^{o}\mathrm{C}$]')
 	directory = '../output_figs/'
-	fileName = ('mean_seasonal_cycle_lat' + str(LAT_BNDS[0]) + '_to_' +
+        if not os.path.exists(directory):
+            os.makedirs(directory)	
+        fileName = ('mean_seasonal_cycle_lat' + str(LAT_BNDS[0]) + '_to_' +
 		str(LAT_BNDS[1]) + '_lon' + str(LON_BNDS[0]) + '_to_' + 
 		str(LON_BNDS[1]) + '.png')
 	plt.savefig(directory + fileName, bbox_inches='tight', pad_inches=1,
